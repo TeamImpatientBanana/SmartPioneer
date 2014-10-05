@@ -11,45 +11,61 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-	var srcOff = req.body.srcOff;
-	var volUp = req.body.volUp;
-	var volDown = req.body.volDown;
-	var muteAtt = req.body.muteAtt;
 
 	if(req.body.srcOff) {
+
+		//Source is on pin 3. Turn pin 3 on when the Source button is pressed
 		console.log(req.body.srcOff);
+
+		var pwm3 = new mraa.Pwm(3);
+		pwm3.enable(true);
+        setTimeout(function(){
+            pwm3.enable(false);
+            console.log("power off");
+            res.send(200);
+        }, 1000);
+	}
+
+	else if(req.body.muteAtt) {
+
+		//Mute is on pin 6. Turn pin 6 on when the Mute button is pressed
+		console.log(req.body.muteAtt);
+
+		var pwm6 = new mraa.Pwm(6);
+		pwm6.enable(true);
+        setTimeout(function(){
+            pwm6.enable(false);
+            console.log("power off");
+            res.send(200);
+        }, 1000);
+	}
+
+	else if(req.body.volDown) {
+
+		//VolDown is on pin 9. Turn pin  on when the Source button is pressed
+		console.log(req.body.volDown);
 
 		var pwm9 = new mraa.Pwm(9);
 		pwm9.enable(true);
-
-		//set the period in microseconds.
-		//pwm9.period(1.0);
-        //pwm9.enable(false);
-		//var value = 1.0;
-/*
-		setInterval(function () {
-		    if (value >= 1.0) {
-		        pwm9.enable(false);
-		        return false;
-		    }
-		    
-		    value = value + 1;
-		    console.log(value);
-		    pwm9.write(value); //Write duty cycle value.
-
-		    console.log(pwm9.read());//read current value that is set before.
-		}, 200);
-*/
-        res.send(200);
+        setTimeout(function(){
+            pwm9.enable(false);
+            console.log("power off");
+            res.send(200);
+        }, 1000);
 	}
+
 	else if(req.body.volUp) {
+
+		//VolUp is on pin 11. Turn pin 11 on when the VolUp button is pressed
 		console.log(req.body.volUp);
-	}
-	else if(req.body.volDown) {
-		console.log(req.body.volDown);
-	}
-	else if(req.body.muteAtt) {
-		console.log(req.body.muteAtt);
+        
+        var pwm11 = new mraa.Pwm(11);
+		pwm11.enable(true);
+        setTimeout(function(){
+            pwm11.enable(false);
+            console.log("power off");
+            res.send(200);
+        }, 1000);
 	}
 });
 
