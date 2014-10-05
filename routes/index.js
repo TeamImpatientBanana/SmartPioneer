@@ -10,6 +10,7 @@ router.get('/', function(req, res) {
   console.log("GET/");
 });
 
+/*
 router.post('/', function(req, res) {
 
 	if(req.body.srcOff) {
@@ -22,8 +23,8 @@ router.post('/', function(req, res) {
         setTimeout(function(){
             pwm3.enable(false);
             console.log("power off");
-            res.send(200);
-        }, 1000);
+            res.status(200).send("");
+        }, 500);
 	}
 
 	else if(req.body.muteAtt) {
@@ -36,8 +37,8 @@ router.post('/', function(req, res) {
         setTimeout(function(){
             pwm6.enable(false);
             console.log("power off");
-            res.send(200);
-        }, 1000);
+            res.status(200).send("");
+        }, 500);
 	}
 
 	else if(req.body.volDown) {
@@ -50,8 +51,8 @@ router.post('/', function(req, res) {
         setTimeout(function(){
             pwm9.enable(false);
             console.log("power off");
-            res.send(200);
-        }, 1000);
+            res.status(200).send("");
+        }, 500);
 	}
 
 	else if(req.body.volUp) {
@@ -64,10 +65,10 @@ router.post('/', function(req, res) {
         setTimeout(function(){
             pwm11.enable(false);
             console.log("power off");
-            res.send(200);
-        }, 1000);
+            res.status(200).send("");
+        }, 500);
 	}
 });
-
+*/
 
 module.exports = router;
