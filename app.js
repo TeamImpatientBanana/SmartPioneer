@@ -59,7 +59,7 @@ app.use(function(err, req, res, next) {
     });
 });
 
-/*
+
 board.on("ready", function() {
   var byte = 0;
   this.pinMode(9, this.MODES.OUTPUT);
@@ -68,7 +68,7 @@ board.on("ready", function() {
     board.digitalWrite(9, (byte ^= 1));
   }, 500);
 });
-*/
+
 
 
 console.log('MRAA Version: ' + mraa.getVersion()); //write the mraa version to the Intel XDK console
@@ -87,6 +87,25 @@ function periodicActivity()
   setTimeout(periodicActivity,1000); //call the indicated function after 1 second (1000 milliseconds)
 }
 
+
+//Initialize PWM on Digital Pin #3 (D3) and enable the pwm pin
+var pwm9 = new mraa.Pwm(9, -1, false);
+pwm9.enable(true);
+
+//set the period in microseconds.
+pwm9.period_us(200);
+var value = 0.0;
+
+setInterval(function () {
+    if (value >= 1.0) {
+        value = 0.0;
+    }
+    
+    value = value + 0.03;
+    pwm9.write(value); //Write duty cycle value. 
+
+    console.log(pwm9.read());//read current value that is set before.
+}, 3000);
 
 
 module.exports = app;

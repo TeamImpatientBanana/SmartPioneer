@@ -1,5 +1,16 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    h1= title
+    div.centerButtons
+        button#buttonSrcOff(type='button', name='buttonSrcOff').
+            Source/Off
+        br
+        button#buttonVolUp(type='button', name='buttonVolUp').
+            Volume Up
+        br
+        button#buttonVolDown(type='button', name='buttonVolDown').
+            Volume Down
+        br
+        button#buttonMute(type='button', name='buttonMute').
+            Mute/Attenuate
