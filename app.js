@@ -6,10 +6,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mraa = require('mraa'); //require mraa
 
+//var fs = require('fs');
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
+//var srcOff = require('./routes/srcOff');
+//var muteAtt = require('./routes/muteAtt');
+//var volDown = require('./routes/volDown');
+//var volUp = require('./routes/volUp');
 
-var app = express();
+var app = express()
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,7 +31,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-
+/*
+app.use('/srcOff', srcOff);
+app.use('/muteAtt', muteAtt);
+app.use('/volDown', volDown);
+app.use('/volUp', volUp);
+*/
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
@@ -57,9 +68,84 @@ app.use(function(err, req, res, next) {
     });
 });
 
+// From ./bin/www
 
-console.log('MRAA Version: ' + mraa.getVersion()); //write the mraa version to the Intel XDK console
-console.log(process.env.PORT);
+var debug = require('debug')('BlinkSP');
+
+app.set('port', process.env.PORT || 3000);
+
+
+var server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
+});
+
+var io = require('socket.io').listen(server);
+
+io.on('connection', function (socket) {
+
+
+    socket.on('srcOff', function (data) {
+
+      //Source is on pin 3. Turn pin 3 on when the Source button is pressed
+      console.log("srcOff pressed");
+
+      var pwm3 = new mraa.Pwm(3);
+      pwm3.enable(true);
+        setTimeout(function(){
+          pwm3.enable(false);
+          console.log("power off");
+        }, 200);
+
+    });
+
+
+    socket.on('muteAtt', function (data) {
+
+      //Mute is on pin 6. Turn pin 6 on when the Mute button is pressed
+
+      var pwm6 = new mraa.Pwm(6);
+      pwm6.enable(true);
+      pwm6.write(1.0);
+      console.log(pwm6.read());
+        //setTimeout(function(){
+          //pwm6.enable(false);
+          //console.log("power off");
+      //}, 200);
+
+    });
+
+
+    socket.on('volDown', function (data) {
+
+      //VolDown is on pin 9. Turn pin  on when the Source button is pressed
+
+      var pwm9 = new mraa.Pwm(9);
+      console.log(pwm9);
+      pwm9.enable(true);
+        setTimeout(function(){
+          pwm9.enable(false);
+          console.log("power off");
+        }, 200);
+
+    });
+
+
+    socket.on('volUp', function (data) {
+
+      //VolUp is on pin 5. Turn pin 5 on when the VolUp button is pressed
+        
+      var pwm5 = new mraa.Pwm(5);
+      console.log(pwm5);
+      pwm5.enable(true);
+        setTimeout(function(){
+          pwm5.enable(false);
+          console.log("power off");
+        }, 200);
+
+    });
+});
+
+
 
 var myOnboardLed = new mraa.Gpio(13); //LED hooked up to digital pin 13 (or built in pin on Galileo Gen1 & Gen2)
 myOnboardLed.dir(mraa.DIR_OUT); //set the gpio direction to output
@@ -74,27 +160,5 @@ function periodicActivity()
   setTimeout(periodicActivity,1000); //call the indicated function after 1 second (1000 milliseconds)
 }
 
-/*
-//Initialize PWM on Digital Pin #9 (D9) and enable the pwm pin
-var pwm9 = new mraa.Pwm(9, -1, false);
-pwm9.enable(true);
-
-//set the period in microseconds.
-pwm9.period_us(200);
-var value = 1.0;
-
-setInterval(function () {
-    if (value >= 1.0) {
-        pwm9.enable(false);
-        return false;
-    }
-    
-    value = value + 1;
-    console.log(value);
-    pwm9.write(value); //Write duty cycle value.
-
-    console.log(pwm9.read());//read current value that is set before.
-}, 200);
-*/
 
 module.exports = app;

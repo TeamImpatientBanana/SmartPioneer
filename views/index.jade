@@ -16,74 +16,24 @@ block content
             Mute/Attenuate
 
     script(type="text/javascript").
-        $("#buttonSrcOff").click(function(event) {
-            event.preventDefault();
-            var data = {};
-            data.srcOff = $('#buttonSrcOff').val();
-            console.log(data);
+        var socket = io.connect('http://192.168.42.1:3000');
 
-            $.ajax({
-                type: 'POST',
-                url: '/',
-                data: data,
-                dataType: 'application/json',
-                success: function(data) {
-                    console.log('success');
-                    console.log(data);
-                }
-            });
+        $("#buttonSrcOff").click(function(event) {
+            //socket = io.connect('http://192.168.42.1:3000', { 'forceNew':true });
+            socket.emit('srcOff');
         });
 
         $("#buttonVolUp").click(function(event) {
-            event.preventDefault();
-            var data = {};
-            data.volUp = $('#buttonVolUp').val();
-            console.log(data);
-
-            $.ajax({
-                type: 'POST',
-                url: '/',
-                data: data,
-                dataType: 'application/json',
-                success: function(data) {
-                    console.log('success');
-                    console.log(data);
-                }
-            });
+            //socket = io.connect('http://192.168.42.1:3000', { 'forceNew':true });
+            socket.emit('volUp');
         });
 
         $("#buttonVolDown").click(function(event) {
-            event.preventDefault();
-            var data = {};
-            data.volDown = $('#buttonVolDown').val();
-            console.log(data);
-
-            $.ajax({
-                type: 'POST',
-                url: '/',
-                data: data,
-                dataType: 'application/json',
-                success: function(data) {
-                    console.log('success');
-                    console.log(data);
-                }
-            });
+            //socket = io.connect('http://192.168.42.1:3000', { 'forceNew':true });
+            socket.emit('volDown');
         });
 
         $("#buttonMuteAtt").click(function(event) {
-            event.preventDefault();
-            var data = {};
-            data.muteAtt = $('#buttonMuteAtt').val();
-            console.log(data);
-
-            $.ajax({
-                type: 'POST',
-                url: '/',
-                data: data,
-                dataType: 'application/json',
-                success: function(data) {
-                    console.log('success');
-                    console.log(data);
-                }
-            });
+            //socket = io.connect('http://192.168.42.1:3000', { 'forceNew':true });
+            socket.emit('muteAtt');
         });
