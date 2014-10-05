@@ -3,14 +3,87 @@ extends layout
 block content
     h1= title
     div.centerButtons
-        button#buttonSrcOff(type='button', name='buttonSrcOff').
+        button#buttonSrcOff(type='button', name='buttonSrcOff', value='srcOff').
             Source/Off
         br
-        button#buttonVolUp(type='button', name='buttonVolUp').
+        button#buttonVolUp(type='button', name='buttonVolUp', value='VolUp').
             Volume Up
         br
-        button#buttonVolDown(type='button', name='buttonVolDown').
+        button#buttonVolDown(type='button', name='buttonVolDown', value='VolDown').
             Volume Down
         br
-        button#buttonMute(type='button', name='buttonMute').
+        button#buttonMuteAtt(type='button', name='buttonMuteAtt', value='muteAtt').
             Mute/Attenuate
+
+    script(type="text/javascript").
+        $("#buttonSrcOff").click(function(event) {
+            event.preventDefault();
+            var data = {};
+            data.srcOff = $('#buttonSrcOff').val();
+            console.log(data);
+
+            $.ajax({
+                type: 'POST',
+                url: '/',
+                data: data,
+                dataType: 'application/json',
+                success: function(data) {
+                    console.log('success');
+                    console.log(data);
+                }
+            });
+        });
+
+        $("#buttonVolUp").click(function(event) {
+            event.preventDefault();
+            var data = {};
+            data.volUp = $('#buttonVolUp').val();
+            console.log(data);
+
+            $.ajax({
+                type: 'POST',
+                url: '/',
+                data: data,
+                dataType: 'application/json',
+                success: function(data) {
+                    console.log('success');
+                    console.log(data);
+                }
+            });
+        });
+
+        $("#buttonVolDown").click(function(event) {
+            event.preventDefault();
+            var data = {};
+            data.volDown = $('#buttonVolDown').val();
+            console.log(data);
+
+            $.ajax({
+                type: 'POST',
+                url: '/',
+                data: data,
+                dataType: 'application/json',
+                success: function(data) {
+                    console.log('success');
+                    console.log(data);
+                }
+            });
+        });
+
+        $("#buttonMuteAtt").click(function(event) {
+            event.preventDefault();
+            var data = {};
+            data.muteAtt = $('#buttonMuteAtt').val();
+            console.log(data);
+
+            $.ajax({
+                type: 'POST',
+                url: '/',
+                data: data,
+                dataType: 'application/json',
+                success: function(data) {
+                    console.log('success');
+                    console.log(data);
+                }
+            });
+        });
