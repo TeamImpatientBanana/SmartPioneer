@@ -107,10 +107,10 @@ io.on('connection', function (socket) {
       pwm6.enable(true);
       pwm6.write(1.0);
       console.log(pwm6.read());
-        //setTimeout(function(){
-          //pwm6.enable(false);
-          //console.log("power off");
-      //}, 200);
+        setTimeout(function(){
+          pwm6.enable(false);
+          console.log("power off");
+      }, 200);
 
     });
 
